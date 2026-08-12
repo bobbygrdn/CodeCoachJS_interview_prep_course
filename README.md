@@ -62,43 +62,43 @@ Here's the order I suggest you approach this material but feel free to jump arou
 
 ### Table Stakes
 
--   [ ] Prototypes
--   [ ] Bind, Call, Apply
--   [ ] Closure
+- [x] Prototypes
+- [ ] Bind, Call, Apply
+- [ ] Closure
 
 ### ES6 and Beyond
 
--   [ ] Map, Filter, Reduce
--   [ ] Generators
--   [ ] Async
--   [ ] Classes
+- [ ] Map, Filter, Reduce
+- [ ] Generators
+- [ ] Async
+- [ ] Classes
 
 ### Event Handling
 
--   [ ] Event Handling (Snake Game)
+- [ ] Event Handling (Snake Game)
 
 ### Time Tested Patterns
 
--   [ ] Design Patterns
--   [ ] Lodash Replica-Lite
--   [ ] Functional JS
+- [ ] Design Patterns
+- [ ] Lodash Replica-Lite
+- [ ] Functional JS
 
 ### Big O and Intro to Sorting and Searching
 
--   [ ] Sorting and Searching Algos
+- [ ] Sorting and Searching Algos
 
 ### Data Structures
 
--   [ ] Trees and tries
--   [ ] Linked Lists
--   [ ] Graphs
--   [ ] Stacks and Queues
+- [ ] Trees and tries
+- [ ] Linked Lists
+- [ ] Graphs
+- [ ] Stacks and Queues
 
 ### To Understand Recursion... you must first understand recursion
 
--   [ ] Recursion in JS
+- [ ] Recursion in JS
 
 ## Common Approaches to JS problems
 
--   [ ] Sliding Window
--   [ ] Frequency Counter
+- [ ] Sliding Window
+- [ ] Frequency Counter
