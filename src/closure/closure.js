@@ -6,7 +6,18 @@
     myFunc() -> undefined
 */
 
-const once = (callback) => {};
+const once = (callback) => {
+  let flag = false;
+  
+  return function(...args) {
+    if(flag === false) {
+      flag = true;
+      return callback(...args);
+    } else {
+      return undefined;
+    }
+  }
+};
 
 /* 
     Write a function that returns a function that take an initial number
@@ -18,7 +29,11 @@ const once = (callback) => {};
     add2(3) -> 5
 */
 
-const addFactory = (initialNum) => {};
+const addFactory = (initialNum) => {
+  return function(newNum) {
+    return initialNum + newNum
+  }
+};
 
 /* 
     Our person has some sensitive information exposed below
@@ -29,22 +44,26 @@ const addFactory = (initialNum) => {};
 */
 
 const personWithPrivateProperties = () => {
+  let accountBalance = -5;
+  let bankInfo = {
+    name: "Bank of Venezuela",
+    sensitiveId: "BV123"
+  }
+
   return {
     age: 10,
     job: "Pizza Driver",
-    accountBalance: -5,
-    bankInfo: { name: "Bank of Venezuela", sensitiveId: "BV123" },
-    updateBank: () => {
-      //your code here
+    updateBank: (arg) => {
+      bankInfo = arg;
     },
     getBankInfo: () => {
-      //your code here
+      return bankInfo.name;
     },
     getAccountBalance: () => {
-      //your code here
+      return accountBalance;
     },
-    updateAccountBalance: () => {
-      //your code here
+    updateAccountBalance: (arg) => {
+      accountBalance += arg;
     },
   };
 };
