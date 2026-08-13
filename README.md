@@ -68,7 +68,7 @@ Here's the order I suggest you approach this material but feel free to jump arou
 
 ### ES6 and Beyond
 
-- [ ] Map, Filter, Reduce
+- [x] Map, Filter, Reduce
 - [ ] Generators
 - [ ] Async
 - [ ] Classes
