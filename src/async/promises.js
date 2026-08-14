@@ -20,10 +20,10 @@ const getDataPromiseChain = () => {
   return fakeApiCall({ name: "Heather" }).then((res) => {
     retVal.name = res.data.name;
 
-    fakeApiCall({ job: "code monkey" }).then((res) => {
+    return fakeApiCall({ job: "code monkey" }).then((res) => {
       retVal.job = res.data.job;
 
-      fakeApiCall({ age: 420 }).then((res) => {
+      return fakeApiCall({ age: 420 }).then((res) => {
         retVal.age = res.data.age;
         return retVal;
       });
@@ -34,10 +34,24 @@ const getDataPromiseChain = () => {
 const getData = async () => {
   // use the async/await pattern to refactor the code above and make the tests pass
   // you should return an object in the same shape as the `retVal` above
+  const retVal = {};
+  await fakeApiCall({ name: "Heather" }).then((res) => {
+    retVal.name = res.data.name;
+
+    return fakeApiCall({ job: "code monkey" }).then((res) => {
+      retVal.job = res.data.job;
+
+      return fakeApiCall({ age: 420 }).then((res) => {
+        retVal.age = res.data.age;
+      });
+    });
+  });
+  return retVal;
 };
 
 const handleMultiplePromises = async (promises = []) => {
   // use promise.all to resolve multiple promises
+  return Promise.all(promises);
 };
 
 /**
@@ -47,6 +61,12 @@ const handleMultiplePromises = async (promises = []) => {
  */
 const myPromiseAll = async (promises = []) => {
   // DO NOT use Promise.all
+  let promiseResults = [];
+  for(let i = 0; i < promises.length; i++) {
+    result = await promises[i];
+    promiseResults.push(result);
+  }
+  return promiseResults;
 };
 
 module.exports = {
