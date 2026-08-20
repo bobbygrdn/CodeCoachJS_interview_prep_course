@@ -79,7 +79,7 @@ Here's the order I suggest you approach this material but feel free to jump arou
 
 ### Time Tested Patterns
 
-- [ ] Design Patterns
+- [x] Design Patterns
 - [ ] Lodash Replica-Lite
 - [ ] Functional JS
 
