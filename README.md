@@ -75,7 +75,7 @@ Here's the order I suggest you approach this material but feel free to jump arou
 
 ### Event Handling
 
-- [ ] Event Handling (Snake Game)
+- [x] Event Handling (Snake Game)
 
 ### Time Tested Patterns
 
