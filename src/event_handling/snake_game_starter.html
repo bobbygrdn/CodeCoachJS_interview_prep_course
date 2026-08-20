@@ -27,26 +27,42 @@
     <button id="down">Down</button>
     <button id="left">Left</button>
     <button id="right">Right</button>
-    <button id="startGame">Start Over</button>
+    <button id="startGame">Start Game</button>
 
-    <p>PTS:</p>
-    <p id="pts"></p>
+    <p>PTS:
+        <span id="pts"></span>
+    </p>
 </div>
 
 <script>
-    /* 
-        TODO:
-        Update the code here to make the snake game work
-        The snake should be able to change directions
-        There should always be an apple present within the board
-        If the snake eats an apple, a new apple should be randomly placed on the board
-        Every time an apple is "eaten" - a point should be added to the score
-        Starting the game over should reset the points, move the snake back to its original positions and clear all apples
-    */
-    const grid = document.getElementById('grid');
-    let pts = 0;
 
+    const grid = document.getElementById('grid');
+    const ptElem = document.getElementById('pts');
+    const upBtn = document.getElementById('up');
+    const downBtn = document.getElementById('down');
+    const leftBtn = document.getElementById('left');
+    const rightBtn = document.getElementById('right');
     const startGameBtn = document.getElementById('startGame');
+
+    const getRandomInt = (max) => {
+        return Math.floor(Math.random() * max);
+    }
+
+    const spawnApple = () => {
+
+        let newApple;
+
+        let openSpotFound = false;
+        while (openSpotFound === false) {
+            let newAppleSpawn = { row: getRandomInt(10), col: getRandomInt(10) };
+            if (!snake.some(s => s.row === newAppleSpawn.row && s.col === newAppleSpawn.col)) {
+                openSpotFound = true;
+                newApple = newAppleSpawn;
+            }
+        }
+
+        return newApple;
+    }
 
     const createBoard = () => {
         for (let i = 0; i < 100; i++) {
@@ -55,23 +71,112 @@
             grid.appendChild(div);
         }
     };
-    // create board
+
+    let pts = 0;
+    ptElem.textContent = pts;
+    let snake = [{ row: 1, col: 3 }, { row: 1, col: 2 }, { row: 1, col: 1 }]
+    let apple = spawnApple();
+
+    let direction = 'right';
+    let nextDirection = 'right';
+    let wallHit = false;
+
+    let moveSnake;
+
+    createBoard();
+
+    const allGridElems = document.querySelectorAll('.grid-space');
+
+    render = () => {
+        allGridElems.forEach(elem => elem.className = 'grid-space');
+
+        let appleIndex = apple.row * 10 + apple.col;
+        allGridElems[appleIndex].classList.add('apple');
+
+        let snakeIndexes = snake.map(snakePart => {
+            let snakePartIndex = snakePart.row * 10 + snakePart.col;
+            allGridElems[snakePartIndex].classList.add('snaky');
+        })
+    }
 
     startGameBtn.addEventListener('click', () => {
-        // add your code here
         startGame();
     });
+    upBtn.addEventListener('click', () => {
+        if (direction === "down") return;
+        nextDirection = "up";
+    })
+    downBtn.addEventListener('click', () => {
+        if (direction === "up") return;
+        nextDirection = "down";
+    })
+    leftBtn.addEventListener('click', () => {
+        if (direction === 'right') return;
+        nextDirection = "left";
+    })
+    rightBtn.addEventListener('click', () => {
+        if (direction === "left") return;
+        nextDirection = "right";
+    })
+
+    const resetGame = () => {
+        startGameBtn.textContent = 'Start Game';
+        allGridElems.forEach(elem => elem.className = 'grid-space');
+        clearInterval(moveSnake);
+        moveSnake = null;
+        pts = 0;
+        ptElem.textContent = pts;
+        direction = 'right';
+        nextDirection = 'right';
+        snake = [{ row: 1, col: 3 }, { row: 1, col: 2 }, { row: 1, col: 1 }]
+        apple = spawnApple();
+        render();
+    }
+
+    render();
 
     const startGame = () => {
-        createBoard();
+        startGameBtn.textContent = 'Start Over';
 
-        const allGridElems = document.querySelectorAll('.grid-space');
+        const eatApple = () => {
+            pts++;
+            ptElem.textContent = pts;
+            apple = spawnApple()
+        }
 
-        // add any code you need to start the game
-        // like setting the direction or helper functions to eat an apple
+        moveSnake = setInterval(() => {
 
-        const moveSnake = setInterval(() => {
-            // add code here to move snake
+            direction = nextDirection;
+            let newHead = { row: snake[0].row, col: snake[0].col };
+
+            // compute new head
+            if (direction === 'right') newHead.col++;
+            if (direction === 'left') newHead.col--;
+            if (direction === 'up') newHead.row--;
+            if (direction === 'down') newHead.row++;
+
+            // check wall/self collision
+            const willEat = newHead.row === apple.row && newHead.col === apple.col;
+            const outOfBounds = newHead.row < 0 || newHead.row >= 10 || newHead.col < 0 || newHead.col >= 10;
+            const bodyToCheck = willEat ? snake : snake.slice(0, -1);
+
+            if (outOfBounds || bodyToCheck.some(s => s.row === newHead.row && s.col === newHead.col)) {
+                resetGame();
+                return;
+            }
+
+            // check apple collision
+            if (willEat) {
+                eatApple();
+            } else {
+                snake.pop();
+            }
+
+            snake.unshift(newHead);
+
+            render();
         }, 1000);
+
+
     };
 </script>
